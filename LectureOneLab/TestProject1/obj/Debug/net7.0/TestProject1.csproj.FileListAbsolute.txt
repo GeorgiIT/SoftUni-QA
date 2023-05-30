@@ -1,0 +1,5 @@
+D:\softuni\Automation\LectureOneLab\TestProject1\obj\Debug\net7.0\TestProject1.csproj.AssemblyReference.cache
+D:\softuni\Automation\LectureOneLab\TestProject1\obj\Debug\net7.0\TestProject1.GeneratedMSBuildEditorConfig.editorconfig
+D:\softuni\Automation\LectureOneLab\TestProject1\obj\Debug\net7.0\TestProject1.AssemblyInfoInputs.cache
+D:\softuni\Automation\LectureOneLab\TestProject1\obj\Debug\net7.0\TestProject1.AssemblyInfo.cs
+D:\softuni\Automation\LectureOneLab\TestProject1\obj\Debug\net7.0\TestProject1.csproj.CoreCompileInputs.cache

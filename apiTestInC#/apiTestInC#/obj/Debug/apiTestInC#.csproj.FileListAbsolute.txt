@@ -1,0 +1,2 @@
+D:\softuni\Automation\apiTestInC#\apiTestInC#\obj\Debug\apiTestInC#.csproj.AssemblyReference.cache
+D:\softuni\Automation\apiTestInC#\apiTestInC#\obj\Debug\apiTestInC#.csproj.CoreCompileInputs.cache
