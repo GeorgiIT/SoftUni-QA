@@ -1,0 +1,300 @@
+{
+	"info": {
+		"_postman_id": "1703f146-1bb5-4c47-bd30-0e5ce666ec88",
+		"name": "examPreparation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27665419"
+	},
+	"item": [
+		{
+			"name": "GET Steve Jobs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify that the firstName is Steve Jobs\", function(){\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.expect(jsonData.firstName).to.eql(\"Steve\");\r",
+							"pm.expect(jsonData.lastName).to.eql(\"Jobs\");\r",
+							"pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://contactbook.nakov.repl.co/api/contacts/1",
+					"protocol": "https",
+					"host": [
+						"contactbook",
+						"nakov",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"contacts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Searching for albert keyword",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify that the first result is Albert Einstein\", function(){\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"var firstResult = jsonData[0];\r",
+							"\r",
+							"pm.expect(firstResult.firstName).to.eql(\"Albert\");\r",
+							"pm.expect(firstResult.lastName).to.eql(\"Einstein\");\r",
+							"pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://contactbook.nakov.repl.co/api/contacts/search/albert",
+					"protocol": "https",
+					"host": [
+						"contactbook",
+						"nakov",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"contacts",
+						"search",
+						"albert"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Searching for empty list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify that results are empty for keyword 'missing{randnom}'\", function() {\r",
+							"  var keyword = \"missing\" + Math.floor(Math.random() * 1000); // Generate a random number\r",
+							"  \r",
+							"  var jsonData = pm.response.json();\r",
+							"  var filteredResults = jsonData.filter(function(contact) {\r",
+							"    return contact.firstName.includes(keyword) || contact.lastName.includes(keyword);\r",
+							"  });\r",
+							"  \r",
+							"  pm.expect(filteredResults).to.be.empty;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://contactbook.nakov.repl.co/api/contacts/search/missingrandom",
+					"protocol": "https",
+					"host": [
+						"contactbook",
+						"nakov",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"contacts",
+						"search",
+						"missingrandom"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Creating new INCORRECT contact to get error message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify error is returned for creating a contact with invalid data\", function() {\r",
+							"  var invalidContact = {\r",
+							"    firstName: \"John\",\r",
+							"    lastName: \"Doe\",\r",
+							"    email: \"invalid-email\",\r",
+							"    phone: \"1234567890\",\r",
+							"    comments: \"there is problem with the system!!!!!!!!!!!!!!!!!!!!!!!!!\"\r",
+							"  };\r",
+							"\r",
+							"  pm.sendRequest({\r",
+							"    url: \"https://contactbook.nakov.repl.co/api/contacts\",\r",
+							"    method: \"POST\",\r",
+							"    header: {\r",
+							"      \"Content-Type\": \"application/json\"\r",
+							"    },\r",
+							"    body: {\r",
+							"      mode: \"raw\",\r",
+							"      raw: JSON.stringify(invalidContact)\r",
+							"    }\r",
+							"  }, function(error, response) {\r",
+							"    pm.expect(response).to.have.status(400);\r",
+							"    pm.expect(response.json()).to.deep.include({ errMsg: \"Invalid email!\" });\r",
+							"  });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Georgi\",\r\n    \"lastName\": \"Todorov\",\r\n    \"email\": \"wrongmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://contactbook.nakov.repl.co/api/contacts",
+					"protocol": "https",
+					"host": [
+						"contactbook",
+						"nakov",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Creating new contact",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Create a new contact and verify the response status code\r",
+							"pm.test(\"Contact Creation\", function() {\r",
+							"  pm.sendRequest({\r",
+							"    url: \"https://contactbook.nakov.repl.co/api/contacts\",\r",
+							"    method: \"POST\",\r",
+							"    header: {\r",
+							"      \"Content-Type\": \"application/json\"\r",
+							"    },\r",
+							"    body: {\r",
+							"      mode: \"raw\",\r",
+							"      raw: JSON.stringify({\r",
+							"        firstName: \"John\",\r",
+							"        lastName: \"Doe\",\r",
+							"        email: \"john.doe@example.com\",\r",
+							"        phone: \"1234567890\"\r",
+							"      })\r",
+							"    }\r",
+							"  }, function() {\r",
+							"    pm.response.to.have.status(201);\r",
+							"  });\r",
+							"});\r",
+							"\r",
+							"// Fetch all contacts and verify the created contact exists in the list\r",
+							"pm.test(\"Contact Listing\", function() {\r",
+							"  pm.sendRequest({\r",
+							"    url: \"https://contactbook.nakov.repl.co/api/contacts\",\r",
+							"    method: \"GET\"\r",
+							"  }, function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"    var contactsList = pm.response.json();\r",
+							"    pm.expect(Array.isArray(contactsList)).to.be.true;\r",
+							"\r",
+							"    var createdContact = {\r",
+							"      firstName: \"John\",\r",
+							"      lastName: \"Doe\",\r",
+							"      email: \"john.doe@example.com\",\r",
+							"      phone: \"1234567890\"\r",
+							"    };\r",
+							"\r",
+							"    var contactExists = contactsList.some(function(contact) {\r",
+							"      return (\r",
+							"        contact.firstName === createdContact.firstName &&\r",
+							"        contact.lastName === createdContact.lastName &&\r",
+							"        contact.email === createdContact.email &&\r",
+							"        contact.phone === createdContact.phone\r",
+							"      );\r",
+							"    });\r",
+							"\r",
+							"    pm.expect(contact.firstName).to.eql(createdContact.firstName);\r",
+							"    pm.expect(contact.lastName).to.eql(createdContact.lastName);\r",
+							"  });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstName\": \"John\",\r\n  \"lastName\": \"Doe\",\r\n  \"email\": \"john.doe@example.com\",\r\n  \"phone\": \"1234567890\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://contactbook.nakov.repl.co/api/contacts",
+					"protocol": "https",
+					"host": [
+						"contactbook",
+						"nakov",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
